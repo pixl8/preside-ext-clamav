@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form i18nBaseUri="system-config.clamav:">
+	<tab>
+		<fieldset>
+			<field name="daemon_path"      control="textinput"   />
+			<field name="enable_for_admin" control="yesnoswitch" />
+			<field name="enable_for_web"   control="yesnoswitch" />
+		</fieldset>
+	</tab>
+</form>
