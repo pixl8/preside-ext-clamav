@@ -43,7 +43,7 @@ component {
 		var result          = "";
 
         while( !IsNull( line ) ) {
-            result = result & line;
+            result = result & line & Chr( 10 );
             line = buffererdReader.readLine();
         }
 

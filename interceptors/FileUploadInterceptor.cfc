@@ -1,6 +1,6 @@
 component extends="coldbox.system.Interceptor" {
 
-	property name="errorLogService"            inject="delayedInjector:errorLogService";
+	property name="notificationService"        inject="delayedInjector:NotificationService";
 	property name="clamAvScanningService"      inject="delayedInjector:clamAvScanningService";
 	property name="systemConfigurationService" inject="delayedInjector:systemConfigurationService";
 
@@ -34,6 +34,16 @@ component extends="coldbox.system.Interceptor" {
 						if ( virusDetected ) {
 							FileDelete( tmpFile );
 							form[ field ] = "";
+
+							var env = Duplicate( cgi );
+							env.append( request );
+							env.append( requestData.headers );
+
+							notificationService.createNotification(
+					              topic = "clamAvThreatDetected"
+					            , type  = "ALERT"
+					            , data  = { report=report, fileField=field, environment=env }
+					        );
 
 							if ( threatBehaviour == "raise" ) {
 								throw(

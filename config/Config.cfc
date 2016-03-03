@@ -8,8 +8,10 @@ component {
 	 *
 	 */
 	public void function configure( required struct config ) {
+		var settings     = arguments.config.settings     ?: {}
 		var interceptors = arguments.config.interceptors ?: [];
 
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.FileUploadInterceptor", properties={} } );
+		settings.notificationTopics.append( "clamAvThreatDetected" );
 	}
 }
