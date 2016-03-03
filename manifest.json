@@ -1,0 +1,6 @@
+{
+	  "id"        : "preside-ext-clamav"
+	, "title"     : "ClamAV Antivirus Protection"
+	, "author"    : "Provides threat scanning for files uploaded to the system"
+	, "version"   : "1.0.0"
+}
