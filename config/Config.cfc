@@ -11,7 +11,7 @@ component {
 		var settings     = arguments.config.settings     ?: {}
 		var interceptors = arguments.config.interceptors ?: [];
 
-		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.FileUploadInterceptor", properties={} } );
+		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvFileUploadInterceptor", properties={} } );
 		settings.notificationTopics.append( "clamAvThreatDetected" );
 	}
 }
