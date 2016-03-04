@@ -34,8 +34,10 @@ component extends="coldbox.system.Interceptor" {
 						var virusDetected = clamAvScanningService.scan( tmpFile, report );
 
 						if ( virusDetected ) {
+							var rc = event.getCollection();
 							FileDelete( tmpFile );
 							form[ field ] = "";
+							rc[ field ]   = "";
 
 							var env = Duplicate( cgi );
 							env.append( request );
