@@ -15,5 +15,6 @@ component {
 
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvFileUploadInterceptor"   , properties={} } );
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvSystemStartupInterceptor", properties={} } );
+		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvSettingsInterceptor"     , properties={} } );
 	}
 }
