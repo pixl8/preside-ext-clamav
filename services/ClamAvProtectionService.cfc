@@ -66,7 +66,7 @@ component {
 		var fileUploadFields = {};
 
 		for( var field in ListToArray( form.fieldNames ?: "" ) ) {
-			if ( FileExists( form[ field ] ) ) {
+			if ( isSimpleValue( form[ field ] ) && FileExists( form[ field ] ) ) {
 				fileUploadFields[ field ] = form[ field ];
 			}
 		}
