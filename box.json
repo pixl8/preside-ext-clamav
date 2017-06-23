@@ -1,0 +1,24 @@
+{
+    "name":"PresideCMS Extension: ClamAV Antivirus for Presdie applications",
+    "type":"preside-extensions",
+    "version":"1.0.3",
+    "location":"https://github.com/pixl8/preside-ext-clamav/archive/v1.0.3.zip",
+    "author":"Pixl8 Interactive",
+    "directory":"application/extensions",
+    "homepage":"https://github.com/pixl8/preside-ext-clamav",
+    "documentation":"https://github.com/pixl8/preside-ext-clamav/wiki",
+    "repository":{
+        "type":"git",
+        "URL":"https://github.com/pixl8/preside-ext-clamav"
+    },
+    "bugs":"https://github.com/pixl8/preside-ext-clamav/issues",
+    "slug":"preside-ext-clamav",
+    "projectURL":"https://github.com/pixl8/preside-ext-clamav",
+    "ignore":[
+        ".git/*",
+        ".gitignore",
+        ".travis.yml",
+        ".twgit_features_subject",
+        "*.sh"
+    ]
+}
