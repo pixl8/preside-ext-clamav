@@ -66,7 +66,7 @@ component {
 		var fileUploadFields = {};
 
 		for( var field in ListToArray( form.fieldNames ?: "" ) ) {
-			if ( isSimpleValue( form[ field ] ) && FileExists( form[ field ] ) ) {
+			if ( isSimpleValue( form[ field ] ) && !reFindNoCase('(http|https)://', form[ field ] ) && FileExists( form[ field ] ) ) {
 				fileUploadFields[ field ] = form[ field ];
 			}
 		}
