@@ -45,7 +45,7 @@ component {
 
 // PRIVATE HELPERS
 	private boolean function _isFileUploadRequest() {
-		var requestData  = GetHttpRequestData();
+		var requestData  = GetHttpRequestData( false );
 		var contentType  = requestData.headers[ "Content-Type" ] ?: "";
 
 		return Len( Trim( contentType ) ) && contentType.startsWith( "multipart/form-data" );
