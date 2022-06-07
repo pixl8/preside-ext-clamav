@@ -92,7 +92,7 @@ component {
 		var javaLib   = DirectoryList( ExpandPath( "/app/extensions/preside-ext-clamav/services/lib" ), false, "path" );
 		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", javaLib ).init( _getRemoteHostname(), _getRemotePort() );
 
-		return _clamAvClient
+		return _clamAvClient;
 	}
 
 	private string function _getRemoteHostname() {
