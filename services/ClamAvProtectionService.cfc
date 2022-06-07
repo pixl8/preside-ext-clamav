@@ -54,11 +54,15 @@ component {
 		var avSettings = $getPresideCategorySettings( "clamav" );
 		var needToScan = false;
 
-		if ( requestContext.isAdminRequest() || requestContext.isAdminUser() ) {
-			return IsBoolean( avSettings.enable_for_admin ?: "" ) && avSettings.enable_for_admin;
+		if ( !Len( avSettings.daemon_path ?: "" ) && $isFeatureEnabled( "clamAvLocalBinary" ) ) {
+			return false;
 		}
 
-		return IsBoolean( avSettings.enable_for_web ?: "" ) && avSettings.enable_for_web;
+		if ( requestContext.isAdminRequest() || requestContext.isAdminUser() ) {
+			return !StructKeyExists( avSettings, "enable_for_admin" ) || $helpers.isTrue( avSettings.enable_for_admin ?: "" );
+		}
+
+		return !StructKeyExists( avSettings, "enable_for_web" ) || $helpers.isTrue( avSettings.enable_for_web ?: "" );
 	}
 
 	private struct function _getFileUploadFields() {
