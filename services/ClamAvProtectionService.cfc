@@ -31,7 +31,6 @@ component {
 
 				if ( threatDetected ) {
 					fieldsWithThreats.append( field );
-
 					_cleanupFile( tmpFilePath, field, requestContext );
 					_raiseNotification( report, field );
 				}
@@ -82,8 +81,7 @@ component {
 	}
 
 	private void function _raiseNotification( required struct report, required string fileField ) {
-		var env = Duplicate( cgi );
-		env.append( request );
+		var env = StructCopy( cgi );
 
 		$createNotification(
               topic = "clamAvThreatDetected"

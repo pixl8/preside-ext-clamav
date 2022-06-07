@@ -1,11 +1,13 @@
 component extends="coldbox.system.Interceptor" {
 
+	property name="clamAvScanningService" inject="delayedInjector:clamAvScanningService";
+	property name="formsService"          inject="delayedInjector:formsService";
 
 // PUBLIC
 	public void function configure() {}
 
 	public void function preSaveSystemConfig( event, interceptData ) {
-		if ( ( interceptData.category ?: "" ) == "clamav" ) {
+		if ( ( interceptData.category ?: "" ) == "clamav" && isFeatureEnabled( "clamAvLocalBinary" ) ) {
 			var daemonPath = interceptData.configuration.daemon_path ?: "";
 			var stdOut     = "";
 			var stdErr     = "";
