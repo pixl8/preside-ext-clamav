@@ -89,10 +89,13 @@ component {
 	}
 
 	private any function _getClamAvClient() {
-		var javaLib   = DirectoryList( ExpandPath( "/app/extensions/preside-ext-clamav/services/lib" ), false, "path" );
-		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", javaLib ).init( _getRemoteHostname(), _getRemotePort() );
+		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", _getJavaLib() ).init( _getRemoteHostname(), _getRemotePort() );
 
 		return _clamAvClient;
+	}
+
+	private array function _getJavaLib() {
+		return DirectoryList( ExpandPath( "/app/extensions/preside-ext-clamav/services/lib" ), false, "path" );
 	}
 
 	private string function _getRemoteHostname() {
