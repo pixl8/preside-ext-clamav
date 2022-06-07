@@ -6,20 +6,8 @@ component extends="coldbox.system.Interceptor" {
 // PUBLIC
 	public void function configure() {}
 
-	public void function preRenderForm( event, interceptData ) {
-		if ( interceptData.formName == "system-config.clamav" && clamAvScanningService.useExternalClamAv() ) {
-			interceptData.formName = formsService.createForm(
-				  basedOn   = interceptData.formName
-				, formName  = "system-config.clamav.external"
-				, generator = function( formDefinition ) {
-					formDefinition.deleteField( name="daemon_path", fieldset="default", tab="default" );
-				  }
-			);
-		}
-	}
-
 	public void function preSaveSystemConfig( event, interceptData ) {
-		if ( ( interceptData.category ?: "" ) == "clamav" && !clamAvScanningService.useExternalClamAv() ) {
+		if ( ( interceptData.category ?: "" ) == "clamav" && isFeatureEnabled( "clamAvLocalBinary" ) ) {
 			var daemonPath = interceptData.configuration.daemon_path ?: "";
 			var stdOut     = "";
 			var stdErr     = "";

@@ -13,8 +13,8 @@ component {
 
 		settings.notificationTopics.append( "clamAvThreatDetected" );
 
-		settings.clamav.externalHostname = settings.env.CLAMAV_EXTERNAL_HOSTNAME ?: "";
-		settings.clamav.externalPort     = settings.env.CLAMAV_EXTERNAL_PORT     ?: 3310;
+		settings.clamav.remoteHostname = settings.env.CLAMAV_REMOTE_HOSTNAME ?: "";
+		settings.clamav.remotePort     = settings.env.CLAMAV_REMOTE_PORT     ?: 3310;
 
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvFileUploadInterceptor"   , properties={} } );
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvSystemStartupInterceptor", properties={} } );

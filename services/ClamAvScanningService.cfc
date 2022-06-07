@@ -12,24 +12,26 @@ component {
 
 	// CONSTRUCTOR
 	/**
-	 * @externalHostname.inject coldbox:setting:clamav.externalHostname
-	 * @externalPort.inject     coldbox:setting:clamav.externalPort
+	 * @remoteHostname.inject coldbox:setting:clamav.remoteHostname
+	 * @remotePort.inject     coldbox:setting:clamav.remotePort
 	 */
-	public any function init( required any externalHostname, required any externalPort ) {
-		_setExternalHostname( arguments.externalHostname );
-		_setExternalPort( arguments.externalPort );
+	public any function init( required any remoteHostname, required any remotePort ) {
+		_setRemoteHostname( arguments.remoteHostname );
+		_setRemotePort( arguments.remotePort );
 
 		return this;
 	}
 
 	public boolean function scan( required string filePath, required struct report ) {
-		if ( useExternalClamAv() ) {
-			return _scanExternal( argumentCollection=arguments );
+		if ( $isFeatureEnabled( "clamAvRemoteService" ) ) {
+			return _scanRemote( argumentCollection=arguments );
 		} else {
 			return _scanLocal( argumentCollection=arguments );
 		}
 	}
 
+
+// PRIVATE HELPERS
 	private boolean function _scanLocal( required string filePath, required struct report ) {
 		var clamavPath = $getPresideSetting( "clamav", "daemon_path" );
 		var command    = [ clamavPath, "--fdpass", arguments.filePath ];
@@ -50,13 +52,13 @@ component {
 		return report.virusDetected;
 	}
 
-	private boolean function _scanExternal( required string filePath, required struct report ) {
+	private boolean function _scanRemote( required string filePath, required struct report ) {
 		try {
 			var ClamAvClient     = _getClamAvClient();
 			var inputStream      = CreateObject( "java", "java.io.FileInputStream" ).init( arguments.filePath );
 			var scanResult       = ClamAvClient.scan( inputStream );
 
-			report.stdOut        = _processExternalResponse( scanResult );
+			report.stdOut        = _processRemoteResponse( scanResult );
 			report.virusDetected = !ClamAvClient.isCleanReply( scanResult );
 		} catch( any e ) {
 			$raiseError( e );
@@ -65,25 +67,6 @@ component {
 		}
 
 		return report.virusDetected;
-	}
-
-	public boolean function useExternalClamAv() {
-		return Len( _getExternalHostname() ) > 0;
-	}
-
-// PRIVATE HELPERS
-	private any function _getClamAvClient() {
-		return CreateObject( "java", "fi.solita.clamav.ClamAVClient", _getLib() ).init( _getExternalHostname(), _getExternalPort() );
-	}
-
-	private array function _getLib() {
-		_lib = _lib ?: DirectoryList( ExpandPath( GetDirectoryFromPath( GetCurrentTemplatePath() ) & "lib" ), false, "path" );
-		return _lib;
-	}
-
-	private string function _processExternalResponse( required any scanResult ) {
-		var resultString = toString( arguments.scanResult );
-		return ReReplaceNoCase( resultString, "^stream:\s", "" );
 	}
 
 	private string function _processStream( required any streamInput ) {
@@ -100,19 +83,30 @@ component {
 		return result;
 	}
 
-
-	private string function _getExternalHostname() {
-		return _externalHostname;
-	}
-	private void function _setExternalHostname( required string externalHostname ) {
-		_externalHostname = arguments.externalHostname;
+	private string function _processRemoteResponse( required any scanResult ) {
+		var resultString = toString( arguments.scanResult );
+		return ReReplaceNoCase( resultString, "^stream:\s", "" );
 	}
 
-	private numeric function _getExternalPort() {
-		return _externalPort;
+	private any function _getClamAvClient() {
+		var javaLib   = DirectoryList( ExpandPath( "/app/extensions/preside-ext-clamav/services/lib" ), false, "path" );
+		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", javaLib ).init( _getRemoteHostname(), _getRemotePort() );
+
+		return _clamAvClient
 	}
-	private void function _setExternalPort( required numeric externalPort ) {
-		_externalPort = arguments.externalPort;
+
+	private string function _getRemoteHostname() {
+		return _remoteHostname;
+	}
+	private void function _setRemoteHostname( required string remoteHostname ) {
+		_remoteHostname = arguments.remoteHostname;
+	}
+
+	private numeric function _getRemotePort() {
+		return _remotePort;
+	}
+	private void function _setRemotePort( required numeric remotePort ) {
+		_remotePort = arguments.remotePort;
 	}
 
 }
