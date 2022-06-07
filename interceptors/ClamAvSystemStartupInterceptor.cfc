@@ -11,9 +11,10 @@ component extends="coldbox.system.Interceptor" {
 	}
 
 	public void function afterConfigurationLoad( event, interceptData ) {
-		var features       = controller.getSetting( "features" );
-		var remoteHostname = controller.getSetting( "clamav.remoteHostname" );
-		var remotePort     = controller.getSetting( "clamav.remotePort" );
+		var settings       = getController().getSettingStructure();
+		var features       = settings.features ?: {};
+		var remoteHostname = settings.clamav.remoteHostname ?: "";
+		var remotePort     = settings.clamav.remotePort     ?: 3310;
 
 		// These features should never be set manually! This logic will enable the correct features based on the remote server settings...
 		if ( Len( Trim( remoteHostname ) ) && isNumeric( remotePort ) ) {
@@ -22,6 +23,8 @@ component extends="coldbox.system.Interceptor" {
 		} else {
 			features.clamAvLocalBinary   = { enabled=true };
 			features.clamAvRemoteService = { enabled=false };
+
+			StructDelete( settings.healthcheckServices, "clamav" );
 		}
 	}
 

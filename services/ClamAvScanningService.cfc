@@ -30,6 +30,10 @@ component {
 		}
 	}
 
+	public boolean function pingServer() {
+		return _getClamAvClient().ping();
+	}
+
 
 // PRIVATE HELPERS
 	private boolean function _scanLocal( required string filePath, required struct report ) {
@@ -53,13 +57,20 @@ component {
 	}
 
 	private boolean function _scanRemote( required string filePath, required struct report ) {
+		// if we know the remote service is down, don't bother creating a whole heap
+		// of errors that require processing. Just move along and don't stop processing
+		// of valid requests.
+		if ( $isDown( "clamav" ) ) {
+			return false;
+		}
+
 		try {
-			var ClamAvClient     = _getClamAvClient();
-			var inputStream      = CreateObject( "java", "java.io.FileInputStream" ).init( arguments.filePath );
-			var scanResult       = ClamAvClient.scan( inputStream );
+			var clamAvClient = _getClamAvClient();
+			var inputStream  = CreateObject( "java", "java.io.FileInputStream" ).init( arguments.filePath );
+			var scanResult   = clamAvClient.scan( inputStream );
 
 			report.stdOut        = _processRemoteResponse( scanResult );
-			report.virusDetected = !ClamAvClient.isCleanReply( scanResult );
+			report.virusDetected = !clamAvClient.isCleanReply( scanResult );
 		} catch( any e ) {
 			$raiseError( e );
 			report.virusDetected = false;
