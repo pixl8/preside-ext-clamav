@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.0.0
+
+* Add support for ClamAV running as a remote service
+* Default scanning to be turned on when settings have not yet been set
+
 ## v1.0.9
 
 * Convert to github build system
