@@ -18,7 +18,7 @@ box install preside-ext-clamav
 
 ## Remote ClamAV service
 
-As of **2.0.0**, this extension offers support for ClamAV running on a separate machine from your running Preside application. For example, in a Kubernetes cluster, you may run a the `clamav/clamav` docker image as a service that your Preside applications can communicate with.
+As of **2.0.0**, this extension offers support for ClamAV running on a separate machine from your running Preside application. For example, in a Kubernetes cluster, you may run the [clamav/clamav](https://hub.docker.com/r/clamav/clamav) docker image as a service that your Preside applications can communicate with.
 
 In order to enable this feature, you must tell Preside the hostname and port of your remote service. This can be acheived either using environment variables, or by setting directly in your Config.cfc:
 
