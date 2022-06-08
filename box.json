@@ -20,5 +20,8 @@
         ".travis.yml",
         ".twgit_features_subject",
         "*.sh"
-    ]
+    ],
+    "preside":{
+        "minVersion":"10.10.0"
+    }
 }
