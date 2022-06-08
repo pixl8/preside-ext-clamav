@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form i18nBaseUri="system-config.clamav:">
-	<tab>
-		<fieldset>
-			<field name="daemon_path"         control="textinput"   />
-			<field name="enable_for_admin"    control="yesnoswitch" />
-			<field name="enable_for_web"      control="yesnoswitch" />
+	<tab id="default">
+		<fieldset id="default">
+			<field name="daemon_path"         control="textinput"   feature="clamAvLocalBinary" />
+			<field name="enable_for_admin"    control="yesnoswitch" default="true" />
+			<field name="enable_for_web"      control="yesnoswitch" default="true" />
 			<field name="on_detect_behaviour" control="select" values="raise,silent" labels="system-config.clamav:on_detect_behaviour.raise_exception,system-config.clamav:on_detect_behaviour.silent" />
 		</fieldset>
 	</tab>

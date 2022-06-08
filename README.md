@@ -2,31 +2,41 @@
 
 ## Overview
 
-This extension provides anti virus scanning using ClamAV (unix servers only) for files uploaded to Preside. See [Wiki](https://github.com/pixl8/preside-ext-clamav/wiki) for complete usage documentation.
+This extension provides anti virus scanning using ClamAV for files uploaded to Preside. See [Wiki](https://github.com/pixl8/preside-ext-clamav/wiki) for complete usage documentation.
+
+## Requirements
+
+The extension required Preside 10.10 and above.
 
 ## Installation
 
-Install the extension to your application via either of the methods detailed below (Git submodule / CommandBox) and then enable the extension by opening up the Preside developer console and entering:
-
-```
-extension enable preside-ext-clamav
-reload all
-```
-
-### CommandBox (box.json) method
-
-From the root of your application, type the following command:
+Install the extension to your application using [CommandBox](https://docs.preside.org/devguides/config.html#injecting-environment-variables):
 
 ```
 box install preside-ext-clamav
 ```
 
-### Git Submodule method
+## Remote ClamAV service
 
-From the root of your application, type the following command:
+As of **2.0.0**, this extension offers support for ClamAV running on a separate machine from your running Preside application. For example, in a Kubernetes cluster, you may run the [clamav/clamav](https://hub.docker.com/r/clamav/clamav) docker image as a service that your Preside applications can communicate with.
+
+In order to enable this feature, you must tell Preside the hostname and port of your remote service. This can be acheived either using environment variables, or by setting directly in your Config.cfc:
+
+
+```cfc
+// in Config.cfc
+settings.clamav.remoteHostname = "clamav.svc.hostname"
+settings.clamav.remotePort     = 3310;
+```
 
 ```
-git submodule add https://github.com/pixl8/preside-ext-sentry.git application/extensions/preside-ext-clamav
+# environment variables
+CLAMAV_REMOTE_HOSTNAME=clamav.svc.hostname
+CLAMAV_REMOTE_PORT=3310
 ```
+
+See [Injecting environment variables](https://docs.preside.org/devguides/config.html#injecting-environment-variables) in the official Preside docs for details on how to do that.
+
+Once these settings are detected, the ClamAV extension will run in "remote server" mode.
 
 
