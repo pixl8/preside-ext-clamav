@@ -1,6 +1,6 @@
 {
 	  "id"        : "preside-ext-clamav"
 	, "title"     : "ClamAV Antivirus Protection"
-	, "author"    : "Provides threat scanning for files uploaded to the system"
+	, "author"    : "Pixl8 Group"
 	, "version"   : "$VERSION_NUMBER"
 }
