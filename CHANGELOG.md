@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.1
+
+* Fix author attribution in manifest
+
 ## v2.0.0
 
 * Add support for ClamAV running as a remote service
