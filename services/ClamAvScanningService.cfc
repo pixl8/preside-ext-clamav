@@ -14,10 +14,12 @@ component {
 	/**
 	 * @remoteHostname.inject coldbox:setting:clamav.remoteHostname
 	 * @remotePort.inject     coldbox:setting:clamav.remotePort
+	 * @remoteTimeout.inject  coldbox:setting:clamav.remoteTimeout
 	 */
-	public any function init( required any remoteHostname, required any remotePort ) {
+	public any function init( required any remoteHostname, required any remotePort, required numeric remoteTimeout ) {
 		_setRemoteHostname( arguments.remoteHostname );
 		_setRemotePort( arguments.remotePort );
+		_setRemoteTimeout( arguments.remoteTimeout );
 
 		return this;
 	}
@@ -100,7 +102,11 @@ component {
 	}
 
 	private any function _getClamAvClient() {
-		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", _getJavaLib() ).init( _getRemoteHostname(), _getRemotePort() );
+		_clamAvClient = _clamAvClient ?: CreateObject( "java", "fi.solita.clamav.ClamAVClient", _getJavaLib() ).init(
+			  _getRemoteHostname()
+			, _getRemotePort()
+			, JavaCast( "int", _getRemoteTimeout() )
+		);
 
 		return _clamAvClient;
 	}
@@ -121,6 +127,13 @@ component {
 	}
 	private void function _setRemotePort( required numeric remotePort ) {
 		_remotePort = arguments.remotePort;
+	}
+
+	private numeric function _getRemoteTimeout() {
+	    return _remoteTimeout;
+	}
+	private void function _setRemoteTimeout( required numeric remoteTimeout ) {
+	    _remoteTimeout = arguments.remoteTimeout;
 	}
 
 }
