@@ -18,6 +18,7 @@ component {
 		settings.clamav = settings.clamav ?: {};
 		settings.clamav.remoteHostname = settings.clamav.remoteHostname ?: ( settings.env.CLAMAV_REMOTE_HOSTNAME ?: ""   );
 		settings.clamav.remotePort     = settings.clamav.remotePort     ?: ( settings.env.CLAMAV_REMOTE_PORT     ?: 3310 );
+		settings.clamav.remoteTimeout  = settings.clamav.remoteTimeout  ?: ( settings.env.CLAMAV_REMOTE_TIMEOUT  ?: 2000 );
 
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvFileUploadInterceptor"   , properties={} } );
 		interceptors.append( { class="app.extensions.preside-ext-clamav.interceptors.ClamAvSystemStartupInterceptor", properties={} } );

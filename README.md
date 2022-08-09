@@ -27,12 +27,14 @@ In order to enable this feature, you must tell Preside the hostname and port of 
 // in Config.cfc
 settings.clamav.remoteHostname = "clamav.svc.hostname"
 settings.clamav.remotePort     = 3310;
+settings.clamav.remoteTimeout  = 2000; // in milliseconds
 ```
 
 ```
 # environment variables
 CLAMAV_REMOTE_HOSTNAME=clamav.svc.hostname
 CLAMAV_REMOTE_PORT=3310
+CLAMAV_REMOTE_TIMEOUT=2000
 ```
 
 See [Injecting environment variables](https://docs.preside.org/devguides/config.html#injecting-environment-variables) in the official Preside docs for details on how to do that.

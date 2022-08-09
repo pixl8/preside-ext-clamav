@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.2
+
+* [#4](https://github.com/pixl8/preside-ext-clamav/issues/4) Add configurable remote server call timeout and make the default larger than the java client's default (now 2 seconds)
+
 ## v2.0.1
 
 * Fix author attribution in manifest
