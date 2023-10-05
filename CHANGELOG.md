@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.3
+
+* [PXCLAM-6](https://projects.pixl8.london/browse/PXCLAM-6) - FileNotExists error: scary looking errors from vulnerability scanners/hackers
+
 ## v2.0.2
 
 * [#4](https://github.com/pixl8/preside-ext-clamav/issues/4) Add configurable remote server call timeout and make the default larger than the java client's default (now 2 seconds)
