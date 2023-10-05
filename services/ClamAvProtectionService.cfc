@@ -66,10 +66,13 @@ component {
 	}
 
 	private struct function _getFileUploadFields() {
-		var fileUploadFields = {};
+		var fileUploadDir             = GetTempDirectory();
+		var dirLen                    = Len( fileUploadDir );
+		var directoryTraversalPattern = "\.\.\\/"; // i.e. ../, or ..\
+		var fileUploadFields          = {};
 
 		for( var field in ListToArray( form.fieldNames ?: "" ) ) {
-			if ( isSimpleValue( form[ field ] ) && !reFindNoCase('(http|https)://', form[ field ] ) && FileExists( form[ field ] ) ) {
+			if ( IsSimpleValue( form[ field ] ) && Left( form[ field ], dirLen ) == fileUploadDir && !ReFind( directoryTraversalPattern, form[ field ] ) && FileExists( form[ field ] ) ) {
 				fileUploadFields[ field ] = form[ field ];
 			}
 		}
