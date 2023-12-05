@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.0.4
+
+* Do not raise errors when doing ping() healthchecks - too noisy in error monitoring when remote server disappears
+
 ## v2.0.3
 
 * [PXCLAM-6](https://projects.pixl8.london/browse/PXCLAM-6) - FileNotExists error: scary looking errors from vulnerability scanners/hackers
