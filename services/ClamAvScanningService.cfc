@@ -33,7 +33,12 @@ component {
 	}
 
 	public boolean function pingServer() {
-		return _getClamAvClient().ping();
+		try {
+			return _getClamAvClient().ping();
+		} catch( any e ) {
+			// deliberately suppress errors here, too noisy
+			return false;
+		}
 	}
 
 
